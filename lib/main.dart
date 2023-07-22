@@ -1,4 +1,3 @@
-import 'package:comfort_zone_remake/screens/character_details.dart';
 import 'package:comfort_zone_remake/screens/character_gallery.dart';
 import 'package:flutter/material.dart';
 
@@ -19,8 +18,7 @@ class MyApp extends StatelessWidget {
         // colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      // home: const CharacterGalleryScreen(),
-      home: const CharacterDetailsScreen(),
+      home: const CharacterGalleryScreen(),
     );
   }
 }

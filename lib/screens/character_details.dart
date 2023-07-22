@@ -24,7 +24,6 @@ class CharacterDetailsScreen extends StatelessWidget {
               children: [
                 Text('Character name'),
                 Row(
-                  // mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     // Edit
                     IconButton(
