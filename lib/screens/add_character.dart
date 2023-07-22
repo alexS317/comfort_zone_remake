@@ -13,6 +13,7 @@ class AddCharacterScreen extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
+            // Image input (tbd)
             const SizedBox(
               height: 300,
               child: FittedBox(
@@ -20,12 +21,14 @@ class AddCharacterScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 10),
+            // Name input
             const TextField(
               decoration: InputDecoration(
                 labelText: 'Character name',
               ),
             ),
             const SizedBox(height: 10),
+            // Save button
             ElevatedButton.icon(
               onPressed: () {},
               icon: const Icon(Icons.save),
