@@ -8,8 +8,8 @@ class ImageInput extends StatefulWidget {
   // Input a new image (default)
   const ImageInput({super.key, required this.onPickImage}) : oldImage = null ;
 
-  // Edit variant: preview an old image to swap it with a new one
-  const ImageInput.edit({super.key, required this.onPickImage, required this.oldImage});
+  // // Edit variant: preview an old image to swap it with a new one
+  // const ImageInput.edit({super.key, required this.onPickImage, required this.oldImage});
 
   final void Function(File image) onPickImage;
   final File? oldImage;

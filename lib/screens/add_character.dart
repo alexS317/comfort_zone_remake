@@ -12,8 +12,8 @@ class AddCharacterScreen extends ConsumerStatefulWidget {
   // Add a new entry (default)
   const AddCharacterScreen({super.key}) : character = null;
 
-  // Edit an existing entry
-  const AddCharacterScreen.edit({super.key, required this.character});
+  // // Edit an existing entry
+  // const AddCharacterScreen.edit({super.key, required this.character});
 
   final Character? character;
 
@@ -38,6 +38,11 @@ class _AddCharacterScreenState extends ConsumerState<AddCharacterScreen> {
   }
 
   void _saveCharacter(BuildContext context) {
+    if (_selectedImage == null || _nameController.text.trim().isEmpty) {
+      print('Please enter data.');
+      return;
+    }
+
     // Close add screen
     Navigator.of(context).pop();
 
@@ -58,14 +63,14 @@ class _AddCharacterScreenState extends ConsumerState<AddCharacterScreen> {
         child: Column(
           children: [
             // Image input
-            widget.character != null
-                ? ImageInput.edit(
-                    onPickImage: (image) => _selectedImage = image,
-                    oldImage: widget.character!.image,
-                  )
-                : ImageInput(
-                    onPickImage: (image) => _selectedImage = image,
-                  ),
+            // widget.character != null
+            //     ? ImageInput.edit(
+            //         onPickImage: (image) => _selectedImage = image,
+            //         oldImage: widget.character!.image,
+            //       )
+            ImageInput(
+              onPickImage: (image) => _selectedImage = image,
+            ),
             const SizedBox(height: 10),
             // Name input
             TextField(
