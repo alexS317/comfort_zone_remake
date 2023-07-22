@@ -1,10 +1,11 @@
 import 'package:comfort_zone_remake/screens/add_character.dart';
+
 import 'package:flutter/material.dart';
 
 class CharacterGalleryScreen extends StatelessWidget {
   const CharacterGalleryScreen({super.key});
 
-  // Open AddCharacterScreen to add a new entry
+  // Open add screen to add a new entry
   void _addCharacterEntry(BuildContext context) {
     Navigator.of(context).push(
       MaterialPageRoute(

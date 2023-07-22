@@ -9,7 +9,7 @@ class Character {
   Character({
     required this.image,
     required this.name,
-  })  : id = uuid.v4(),
+  })  : id =  uuid.v4(),
         createDate = DateTime.now().toString();
 
   final String id;

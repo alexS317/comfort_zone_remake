@@ -1,33 +1,46 @@
+import 'package:comfort_zone_remake/models/character.dart';
+import 'package:comfort_zone_remake/screens/add_character.dart';
+
 import 'package:flutter/material.dart';
 
 class CharacterDetailsScreen extends StatelessWidget {
-  const CharacterDetailsScreen({super.key});
+  const CharacterDetailsScreen({super.key, required this.character});
+
+  final Character character;
+
+  void _editCharacter(BuildContext context) {
+    Navigator.of(context).pop();
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (ctx) => AddCharacterScreen.edit(
+          character: character,
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Character name'),
+        title: Text(character.name),
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(8),
+        padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            const SizedBox(
-              height: 300,
-              child: FittedBox(
-                child: Icon(Icons.image),
-              ),
-            ),
+            Image.file(character.image),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Character name'),
+                Text(character.name),
                 Row(
                   children: [
                     // Edit
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        _editCharacter(context);
+                      },
                       icon: const Icon(Icons.edit),
                     ),
                     // Delete
@@ -39,6 +52,8 @@ class CharacterDetailsScreen extends StatelessWidget {
                 ),
               ],
             ),
+            Text('Id: ${character.id}'),
+            Text('Date created: ${character.createDate}'),
           ],
         ),
       ),
