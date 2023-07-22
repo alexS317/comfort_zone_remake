@@ -3,6 +3,7 @@ import 'package:comfort_zone_remake/screens/add_character.dart';
 
 import 'package:flutter/material.dart';
 
+// Shows a detailed view of the character entry and allows editing and deleting
 class CharacterDetailsScreen extends StatelessWidget {
   const CharacterDetailsScreen({super.key, required this.character});
 
@@ -10,6 +11,7 @@ class CharacterDetailsScreen extends StatelessWidget {
 
   void _editCharacter(BuildContext context) {
     Navigator.of(context).pop();
+
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (ctx) => AddCharacterScreen.edit(

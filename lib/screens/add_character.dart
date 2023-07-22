@@ -1,13 +1,14 @@
 import 'dart:io';
 
 import 'package:comfort_zone_remake/models/character.dart';
-import 'package:comfort_zone_remake/screens/character_details.dart';
+import 'package:comfort_zone_remake/providers/characters.dart';
 import 'package:comfort_zone_remake/widgets/image_input.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // Add a new character entry or edit an existing one
-class AddCharacterScreen extends StatefulWidget {
+class AddCharacterScreen extends ConsumerStatefulWidget {
   // Add a new entry (default)
   const AddCharacterScreen({super.key}) : character = null;
 
@@ -17,10 +18,10 @@ class AddCharacterScreen extends StatefulWidget {
   final Character? character;
 
   @override
-  State<AddCharacterScreen> createState() => _AddCharacterScreenState();
+  ConsumerState<AddCharacterScreen> createState() => _AddCharacterScreenState();
 }
 
-class _AddCharacterScreenState extends State<AddCharacterScreen> {
+class _AddCharacterScreenState extends ConsumerState<AddCharacterScreen> {
   final _nameController = TextEditingController();
   File? _selectedImage;
 
@@ -40,17 +41,10 @@ class _AddCharacterScreenState extends State<AddCharacterScreen> {
     // Close add screen
     Navigator.of(context).pop();
 
-    // Open detail screen to view new entry
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (ctx) => widget.character != null
-            ? CharacterDetailsScreen(character: widget.character!)
-            : CharacterDetailsScreen(
-                character: Character(
-                    image: _selectedImage!, name: _nameController.text),
-              ),
-      ),
-    );
+    // Add character via provider
+    ref
+        .read(charactersProvider.notifier)
+        .addCharacter(_selectedImage!, _nameController.text);
   }
 
   @override
