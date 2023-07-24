@@ -1,11 +1,11 @@
-import 'package:comfort_zone_remake/providers/characters.dart';
+import 'package:comfort_zone_remake/providers/characters_provider.dart';
 import 'package:comfort_zone_remake/screens/add_character.dart';
 import 'package:comfort_zone_remake/widgets/character_gallery_grid.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-// Character gallery shows small previews of all existing entries
+// Character gallery shows all existing character entries
 class CharacterGalleryScreen extends ConsumerStatefulWidget {
   const CharacterGalleryScreen({super.key});
 
@@ -21,11 +21,12 @@ class _CharacterGalleryScreenState
 
   // Open add screen to add a new entry
   void _addCharacterEntry(BuildContext context) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (ctx) => const AddCharacterScreen(),
-      ),
-    );
+    Navigator.of(context)
+        .push(
+          MaterialPageRoute(
+            builder: (ctx) => const AddCharacterScreen(),
+          ),
+        );
   }
 
   @override

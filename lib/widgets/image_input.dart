@@ -6,10 +6,11 @@ import 'package:image_picker/image_picker.dart';
 // Image input allows to select an image from the gallery and preview it
 class ImageInput extends StatefulWidget {
   // Input a new image (default)
-  const ImageInput({super.key, required this.onPickImage}) : oldImage = null ;
+  const ImageInput({super.key, required this.onPickImage}) : oldImage = null;
 
-  // // Edit variant: preview an old image to swap it with a new one
-  // const ImageInput.edit({super.key, required this.onPickImage, required this.oldImage});
+  // Edit variant: preview an old image to swap it with a new one
+  const ImageInput.edit(
+      {super.key, required this.onPickImage, required this.oldImage});
 
   final void Function(File image) onPickImage;
   final File? oldImage;
@@ -25,14 +26,17 @@ class _ImageInputState extends State<ImageInput> {
   void initState() {
     super.initState();
     // If there is an old image provided, use it for the initial preview
-    if (widget.oldImage != null) _selectedImage = widget.oldImage;
+    if (widget.oldImage != null) {
+      _selectedImage = widget.oldImage;
+    }
   }
 
   // Choose a picture from the gallery and preview it in the input
   void _choosePicture() async {
     // Open gallery and pick an image
     final imagePicker = ImagePicker();
-    final pickedImage = await imagePicker.pickImage(source: ImageSource.gallery, imageQuality: 25);
+    final pickedImage = await imagePicker.pickImage(
+        source: ImageSource.gallery, imageQuality: 25);
 
     // If no image was picked, do nothing
     if (pickedImage == null) return;

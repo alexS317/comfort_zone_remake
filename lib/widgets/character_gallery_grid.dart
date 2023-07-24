@@ -2,6 +2,7 @@ import 'package:comfort_zone_remake/models/character.dart';
 import 'package:comfort_zone_remake/widgets/character_grid_item.dart';
 import 'package:flutter/cupertino.dart';
 
+// Gallery grid to display small previews of the character entries
 class CharacterGalleryGrid extends StatelessWidget {
   const CharacterGalleryGrid({
     super.key,
@@ -25,8 +26,9 @@ class CharacterGalleryGrid extends StatelessWidget {
         crossAxisCount: 4,
       ),
       itemCount: characters.length,
-      itemBuilder: ((context, index) =>
-          CharacterGridItem(character: characters[index])),
+      itemBuilder: ((context, index) => CharacterGridItem(
+            character: characters[index],
+          )),
     );
   }
 }

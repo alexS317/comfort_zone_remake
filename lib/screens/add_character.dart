@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:comfort_zone_remake/models/character.dart';
-import 'package:comfort_zone_remake/providers/characters.dart';
+import 'package:comfort_zone_remake/providers/characters_provider.dart';
 import 'package:comfort_zone_remake/widgets/image_input.dart';
 
 import 'package:flutter/material.dart';
@@ -10,12 +10,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 // Add a new character entry or edit an existing one
 class AddCharacterScreen extends ConsumerStatefulWidget {
   // Add a new entry (default)
-  const AddCharacterScreen({super.key}) : character = null;
+  const AddCharacterScreen({super.key}) : oldCharacter = null;
 
-  // // Edit an existing entry
-  // const AddCharacterScreen.edit({super.key, required this.character});
+  // Edit an existing entry
+  const AddCharacterScreen.edit({super.key, required this.oldCharacter});
 
-  final Character? character;
+  final Character? oldCharacter;
 
   @override
   ConsumerState<AddCharacterScreen> createState() => _AddCharacterScreenState();
@@ -28,7 +28,10 @@ class _AddCharacterScreenState extends ConsumerState<AddCharacterScreen> {
   @override
   void initState() {
     super.initState();
-    if (widget.character != null) _nameController.text = widget.character!.name;
+    if (widget.oldCharacter != null) {
+      _selectedImage = widget.oldCharacter!.image;
+      _nameController.text = widget.oldCharacter!.name;
+    }
   }
 
   @override
@@ -38,18 +41,32 @@ class _AddCharacterScreenState extends ConsumerState<AddCharacterScreen> {
   }
 
   void _saveCharacter(BuildContext context) {
-    if (_selectedImage == null || _nameController.text.trim().isEmpty) {
-      print('Please enter data.');
+    final enteredName = _nameController.text;
+
+    // Prevent submitting an empty entry
+    if (_selectedImage == null || enteredName.trim().isEmpty) {
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please provide an image and the character\'s name.'),
+        ),
+      );
       return;
+    }
+
+    if (widget.oldCharacter == null) {
+      // Add character via provider
+      ref
+          .read(charactersProvider.notifier)
+          .addCharacter(_selectedImage!, enteredName);
+    } else {
+      ref
+          .read(charactersProvider.notifier)
+          .updateCharacter(widget.oldCharacter!, _selectedImage!, enteredName);
     }
 
     // Close add screen
     Navigator.of(context).pop();
-
-    // Add character via provider
-    ref
-        .read(charactersProvider.notifier)
-        .addCharacter(_selectedImage!, _nameController.text);
   }
 
   @override
@@ -63,14 +80,14 @@ class _AddCharacterScreenState extends ConsumerState<AddCharacterScreen> {
         child: Column(
           children: [
             // Image input
-            // widget.character != null
-            //     ? ImageInput.edit(
-            //         onPickImage: (image) => _selectedImage = image,
-            //         oldImage: widget.character!.image,
-            //       )
-            ImageInput(
-              onPickImage: (image) => _selectedImage = image,
-            ),
+            widget.oldCharacter != null
+                ? ImageInput.edit(
+                    onPickImage: (image) => _selectedImage = image,
+                    oldImage: widget.oldCharacter!.image,
+                  )
+                : ImageInput(
+                    onPickImage: (image) => _selectedImage = image,
+                  ),
             const SizedBox(height: 10),
             // Name input
             TextField(
