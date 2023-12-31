@@ -20,7 +20,6 @@ class SQLiteDatabaseHelper {
   Future<Database> _getDatabase() async {
     final dbPath =
         await sql.getDatabasesPath(); // Get default database path on device
-    // print(dbPath);
 
     // Open database
     final db = await sql.openDatabase(
@@ -41,13 +40,13 @@ class SQLiteDatabaseHelper {
   }
 
   // Helper function to copy an image from it's original storage place to the app's own storage space (to prevent losing it)
-  Future<File> _copyImage(File image) async {
+  Future<File> _copyImage(String id, File image) async {
     final appDir = await syspaths
         .getApplicationDocumentsDirectory(); // Get directory to save user data to
     final filename =
         path.basename(image.path); // Get original name of the image file
     final copiedImage = await image
-        .copy('${appDir.path}/${DateTime.now()}_$filename'); // Copy image to the app directory
+        .copy('${appDir.path}/${id}_$filename'); // Copy image to the app directory
 
     return copiedImage;
   }
@@ -91,9 +90,10 @@ class SQLiteDatabaseHelper {
 
   // Add a new character to database and return it
   Future<Character> addCharacter(File image, String name) async {
-    final copiedImage = await _copyImage(image);
+    final id = uuid.v4();
+    final copiedImage = await _copyImage(id, image);
 
-    final newCharacter = Character(image: copiedImage, name: name);
+    final newCharacter = Character(image: copiedImage, name: name, id: id);
 
     // Insert new character entry in database
     final db = await _getDatabase();
@@ -113,7 +113,7 @@ class SQLiteDatabaseHelper {
   // Update a character entry in the database
   Future<Character> updateCharacter(
       Character character, File image, String name) async {
-    final copiedImage = await _copyImage(image);
+    final copiedImage = await _copyImage(character.id, image);
 
     final updatedCharacter = Character(
       id: character.id,

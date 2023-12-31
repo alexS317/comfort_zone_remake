@@ -24,22 +24,21 @@ class CharactersNotifier extends StateNotifier<List<Character>> {
 
   // Update existing character entry
   void updateCharacter(Character character, File image, String name) async {
-    final oldCharactersList = [...state]; // Spread elements of the old state (assign them individually)
-    final currentIndex = oldCharactersList.indexOf(character);
-    oldCharactersList.removeWhere((element) => element.id == character.id);
+    final charactersList = [...state]; // Spread elements of the old state (assign them individually)
+    final currentIndex = charactersList.indexOf(character);
 
     final updatedCharacter =
         await SQLiteDatabaseHelper().updateCharacter(character, image, name);
+    charactersList[currentIndex] = updatedCharacter;
 
-    final newCharactersList = oldCharactersList;
-    newCharactersList.insert(currentIndex, updatedCharacter);
-
-    state = newCharactersList;
+    state = charactersList;
   }
 
   // Delete a character entry
   void deleteCharacter(Character character) async {
-    final charactersList = [...state];  // Spread elements of the old state (assign them individually)
+    final charactersList = [
+      ...state
+    ]; // Spread elements of the old state (assign them individually)
 
     await SQLiteDatabaseHelper().deleteCharacter(character);
     charactersList.remove(character);
