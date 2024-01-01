@@ -1,4 +1,4 @@
-import 'package:comfort_zone_remake/screens/character_gallery.dart';
+import 'package:comfort_zone_remake/screens/random_affirmation.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -17,10 +17,10 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Comfort Zone',
         theme: ThemeData(
-          // colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: const CharacterGalleryScreen(),
+        home: const RandomAffirmationScreen(),
       ),
     );
   }

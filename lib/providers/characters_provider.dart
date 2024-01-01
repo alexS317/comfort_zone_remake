@@ -1,7 +1,9 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:comfort_zone_remake/database/database_helper.dart';
 import 'package:comfort_zone_remake/models/character.dart';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class CharactersNotifier extends StateNotifier<List<Character>> {
@@ -12,6 +14,13 @@ class CharactersNotifier extends StateNotifier<List<Character>> {
     final characters = await SQLiteDatabaseHelper().loadAllCharacters();
 
     state = characters;
+  }
+
+  Future<void> loadRandomCharacter() async {
+    final characters = await SQLiteDatabaseHelper().loadAllCharacters();
+    final randomIndex = Random().nextInt(characters.length);
+
+    state = [characters[randomIndex]];
   }
 
   // Add new character entry
