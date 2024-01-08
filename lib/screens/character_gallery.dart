@@ -55,14 +55,14 @@ class _CharacterGalleryScreenState
               }),
           // Add button
           Positioned(
-            right: 10,
+            right: 20,
             bottom: 20,
             child: IconButton.filled(
               onPressed: () {
                 _addCharacterEntry(context);
               },
               icon: const Icon(Icons.add),
-              iconSize: 30,
+              iconSize: 40,
             ),
           ),
         ],

@@ -14,8 +14,7 @@ class HomeAffirmationScreen extends ConsumerStatefulWidget {
       _HomeAffirmationScreenState();
 }
 
-class _HomeAffirmationScreenState
-    extends ConsumerState<HomeAffirmationScreen> {
+class _HomeAffirmationScreenState extends ConsumerState<HomeAffirmationScreen> {
   late Future<void> _charactersFuture;
 
   void _openGallery(BuildContext context) {
@@ -53,9 +52,11 @@ class _HomeAffirmationScreenState
       appBar: AppBar(
         title: Text(
           'Comfort Zone',
-          style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
+          // style: TextStyle(
+          //   color: Theme.of(context).colorScheme.onPrimary,
+          // ),
         ),
-        backgroundColor: Theme.of(context).colorScheme.primary,
+        // backgroundColor: Theme.of(context).colorScheme.primary,
         actions: [
           IconButton(
             onPressed: () {
@@ -63,13 +64,13 @@ class _HomeAffirmationScreenState
             },
             icon: Icon(
               Icons.grid_view_sharp,
-              color: Theme.of(context).colorScheme.onPrimary,
+              // color: Theme.of(context).colorScheme.onPrimary,
             ),
           ),
         ],
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16.0),
         child: FutureBuilder(
             future: _charactersFuture,
             builder: (context, snapshot) {

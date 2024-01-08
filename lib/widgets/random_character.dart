@@ -17,12 +17,23 @@ class RandomCharacter extends StatelessWidget {
     final randomCharacter = characters[randomIndex];
 
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Image.file(
           randomCharacter.image,
           fit: BoxFit.cover,
+          width: double.infinity,
         ),
-        Text(randomCharacter.name),
+        const SizedBox(
+          height: 10,
+        ),
+        Text(
+          randomCharacter.name,
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
+        const SizedBox(
+          height: 20,
+        ),
         ElevatedButton.icon(
           onPressed: onLoadCharacter,
           icon: const Icon(Icons.favorite),

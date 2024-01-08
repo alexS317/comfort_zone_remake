@@ -106,7 +106,7 @@ class _AddCharacterScreenState extends ConsumerState<AddCharacterScreen> {
                 labelText: 'Character name',
               ),
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 26),
             // Save button
             ElevatedButton.icon(
               onPressed: () {

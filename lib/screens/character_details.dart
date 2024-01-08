@@ -55,33 +55,51 @@ class _CharacterDetailsScreenState
         title: Text(currentCharacter!.name),
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            Image.file(currentCharacter!.image),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(currentCharacter!.name),
-                Row(
-                  children: [
-                    // Edit
-                    IconButton(
-                      onPressed: () {
-                        _openEditScreen(context);
-                      },
-                      icon: const Icon(Icons.edit),
-                    ),
-                    // Delete
-                    IconButton(
-                      onPressed: () {
-                        _deleteEntry();
-                      },
-                      icon: const Icon(Icons.delete),
-                    ),
-                  ],
-                ),
-              ],
+            Image.file(
+              currentCharacter!.image,
+              fit: BoxFit.cover,
+              width: double.infinity,
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 6.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    currentCharacter!.name,
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  Row(
+                    children: [
+                      // Edit
+                      IconButton(
+                        onPressed: () {
+                          _openEditScreen(context);
+                        },
+                        icon: const Icon(
+                          Icons.edit,
+                          size: 30,
+                        ),
+                      ),
+                      // Delete
+                      IconButton(
+                        onPressed: () {
+                          _deleteEntry();
+                        },
+                        icon: const Icon(
+                          Icons.delete,
+                          size: 30,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ],
         ),
