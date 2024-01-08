@@ -59,14 +59,24 @@ class _AddCharacterScreenState extends ConsumerState<AddCharacterScreen> {
       ref
           .read(charactersProvider.notifier)
           .addCharacter(_selectedImage!, enteredName);
+
+      // Close add screen
+      Navigator.of(context).pop();
     } else {
       ref
           .read(charactersProvider.notifier)
           .updateCharacter(widget.oldCharacter!, _selectedImage!, enteredName);
-    }
 
-    // Close add screen
-    Navigator.of(context).pop();
+      // Send updated character back to view on details screen
+      Character updatedCharacter = Character(
+          image: _selectedImage!,
+          name: enteredName,
+          id: widget.oldCharacter!.id,
+          createDate: widget.oldCharacter!.createDate);
+
+      // Close edit screen
+      Navigator.of(context).pop(updatedCharacter);
+    }
   }
 
   @override

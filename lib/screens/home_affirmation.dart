@@ -1,19 +1,21 @@
 import 'package:comfort_zone_remake/providers/characters_provider.dart';
+import 'package:comfort_zone_remake/screens/add_character.dart';
 import 'package:comfort_zone_remake/screens/character_gallery.dart';
+import 'package:comfort_zone_remake/widgets/random_character.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class RandomAffirmationScreen extends ConsumerStatefulWidget {
-  const RandomAffirmationScreen({super.key});
+class HomeAffirmationScreen extends ConsumerStatefulWidget {
+  const HomeAffirmationScreen({super.key});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
-      _RandomAffirmationScreenState();
+      _HomeAffirmationScreenState();
 }
 
-class _RandomAffirmationScreenState
-    extends ConsumerState<RandomAffirmationScreen> {
+class _HomeAffirmationScreenState
+    extends ConsumerState<HomeAffirmationScreen> {
   late Future<void> _charactersFuture;
 
   void _openGallery(BuildContext context) {
@@ -24,9 +26,19 @@ class _RandomAffirmationScreenState
     );
   }
 
+  // Open add screen to add a new entry if there are no entries yet
+  Future<void> _addCharacterEntry(BuildContext context) async {
+    await Future.delayed(Duration.zero);
+    if (!mounted) return;
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (ctx) => const AddCharacterScreen(),
+      ),
+    );
+  }
+
   void _loadRandomCharacter() {
-    _charactersFuture =
-        ref.read(charactersProvider.notifier).loadRandomCharacter();
+    _charactersFuture = ref.read(charactersProvider.notifier).loadCharacters();
   }
 
   @override
@@ -37,8 +49,6 @@ class _RandomAffirmationScreenState
 
   @override
   Widget build(BuildContext context) {
-    final characters = ref.watch(charactersProvider);
-
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -63,22 +73,20 @@ class _RandomAffirmationScreenState
         child: FutureBuilder(
             future: _charactersFuture,
             builder: (context, snapshot) {
-              return snapshot.connectionState == ConnectionState.waiting
-                  ? const Center(child: CircularProgressIndicator())
-                  : Column(
-                      children: [
-                        Image.file(
-                          characters[0].image,
-                          fit: BoxFit.cover,
-                        ),
-                        Text(characters[0].name),
-                        ElevatedButton.icon(
-                          onPressed: _loadRandomCharacter,
-                          icon: const Icon(Icons.favorite),
-                          label: const Text('Get Affirmation'),
-                        ),
-                      ],
-                    );
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(child: CircularProgressIndicator());
+              } else {
+                final characters = ref.watch(charactersProvider);
+                if (characters.isEmpty) {
+                  _addCharacterEntry(context);
+                  return const Center(
+                      child: Text("No characters available yet."));
+                } else {
+                  return RandomCharacter(
+                      characters: characters,
+                      onLoadCharacter: _loadRandomCharacter);
+                }
+              }
             }),
       ),
     );

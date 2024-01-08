@@ -23,9 +23,12 @@ class CharacterGridItem extends StatelessWidget {
         _openCharacter(context);
       },
       child: GridTile(
-        child: Image.file(
-          character.image,
-          fit: BoxFit.cover,
+        child: Padding(
+          padding: const EdgeInsets.all(1.0),
+          child: Image.file(
+            character.image,
+            fit: BoxFit.cover,
+          ),
         ),
       ),
     );

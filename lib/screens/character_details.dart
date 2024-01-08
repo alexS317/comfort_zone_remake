@@ -18,16 +18,22 @@ class CharacterDetailsScreen extends ConsumerStatefulWidget {
 
 class _CharacterDetailsScreenState
     extends ConsumerState<CharacterDetailsScreen> {
-  void _openEditScreen(BuildContext context) {
-    Navigator.of(context).pop();
+  Character? currentCharacter;
+  Character? updatedCharacter;
 
-    Navigator.of(context).push(
+  Future<void> _openEditScreen(BuildContext context) async {
+    // Wait for updated character data to come back after editing
+    updatedCharacter = await Navigator.of(context).push(
       MaterialPageRoute(
         builder: (ctx) => AddCharacterScreen.edit(
-          oldCharacter: widget.character,
+          oldCharacter: currentCharacter,
         ),
       ),
     );
+
+    setState(() {
+      currentCharacter = updatedCharacter;
+    });
   }
 
   void _deleteEntry() {
@@ -38,19 +44,25 @@ class _CharacterDetailsScreenState
 
   @override
   Widget build(BuildContext context) {
+    currentCharacter = widget.character;
+
+    if (updatedCharacter != null) {
+      currentCharacter = updatedCharacter!;
+    }
+
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.character.name),
+        title: Text(currentCharacter!.name),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            Image.file(widget.character.image),
+            Image.file(currentCharacter!.image),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(widget.character.name),
+                Text(currentCharacter!.name),
                 Row(
                   children: [
                     // Edit
@@ -71,8 +83,6 @@ class _CharacterDetailsScreenState
                 ),
               ],
             ),
-            Text('Id: ${widget.character.id}'),
-            Text('Date created: ${widget.character.createDate}'),
           ],
         ),
       ),

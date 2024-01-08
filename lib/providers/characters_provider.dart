@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:math';
 
 import 'package:comfort_zone_remake/database/database_helper.dart';
 import 'package:comfort_zone_remake/models/character.dart';
@@ -16,13 +15,6 @@ class CharactersNotifier extends StateNotifier<List<Character>> {
     state = characters;
   }
 
-  Future<void> loadRandomCharacter() async {
-    final characters = await SQLiteDatabaseHelper().loadAllCharacters();
-    final randomIndex = Random().nextInt(characters.length);
-
-    state = [characters[randomIndex]];
-  }
-
   // Add new character entry
   void addCharacter(File image, String name) async {
     final newCharacter = await SQLiteDatabaseHelper().addCharacter(image, name);
@@ -33,8 +25,12 @@ class CharactersNotifier extends StateNotifier<List<Character>> {
 
   // Update existing character entry
   void updateCharacter(Character character, File image, String name) async {
-    final charactersList = [...state]; // Spread elements of the old state (assign them individually)
-    final currentIndex = charactersList.indexOf(character);
+    // Spread elements of the old state (assign them individually)
+    final charactersList = [...state];
+    // Search the current character based on id
+    final currentCharacter =
+        charactersList.where((element) => element.id == character.id).toList();
+    final currentIndex = charactersList.indexOf(currentCharacter[0]);
 
     final updatedCharacter =
         await SQLiteDatabaseHelper().updateCharacter(character, image, name);
@@ -45,9 +41,8 @@ class CharactersNotifier extends StateNotifier<List<Character>> {
 
   // Delete a character entry
   void deleteCharacter(Character character) async {
-    final charactersList = [
-      ...state
-    ]; // Spread elements of the old state (assign them individually)
+    // Spread elements of the old state (assign them individually)
+    final charactersList = [...state];
 
     await SQLiteDatabaseHelper().deleteCharacter(character);
     charactersList.remove(character);
