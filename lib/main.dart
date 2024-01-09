@@ -52,6 +52,9 @@ class MyApp extends StatelessWidget {
           fontSize: 20,
           fontWeight: FontWeight.bold,
         ),
+        bodyMedium: TextStyle(
+          fontSize: 15,
+        ),
       ),
       useMaterial3: true,
     );
@@ -82,6 +85,9 @@ class MyApp extends StatelessWidget {
         titleMedium: TextStyle(
           fontSize: 20,
           fontWeight: FontWeight.bold,
+        ),
+        bodyMedium: TextStyle(
+          fontSize: 15,
         ),
       ),
       useMaterial3: true,

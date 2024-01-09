@@ -26,9 +26,10 @@ class CharacterGalleryGrid extends StatelessWidget {
         crossAxisCount: 4,
       ),
       itemCount: characters.length,
-      itemBuilder: ((context, index) => CharacterGridItem(
-            character: characters[index],
-          )),
+      itemBuilder: (context, index) => CharacterGridItem(
+        character: characters[index],
+      ),
+      shrinkWrap: true,
     );
   }
 }

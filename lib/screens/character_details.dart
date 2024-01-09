@@ -57,13 +57,13 @@ class _CharacterDetailsScreenState
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Image.file(
-              currentCharacter!.image,
-              fit: BoxFit.cover,
-              width: double.infinity,
-            ),
-            const SizedBox(
-              height: 10,
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Image.file(
+                currentCharacter!.image,
+                fit: BoxFit.cover,
+                width: double.infinity,
+              ),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 6.0),

@@ -1,11 +1,12 @@
 import 'package:comfort_zone_remake/providers/characters_provider.dart';
 import 'package:comfort_zone_remake/screens/add_character.dart';
-import 'package:comfort_zone_remake/screens/character_gallery.dart';
+import 'package:comfort_zone_remake/screens/gallery_tabs.dart';
 import 'package:comfort_zone_remake/widgets/random_character.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+// Main screen that displays a random character and affirmation
 class HomeAffirmationScreen extends ConsumerStatefulWidget {
   const HomeAffirmationScreen({super.key});
 
@@ -20,7 +21,7 @@ class _HomeAffirmationScreenState extends ConsumerState<HomeAffirmationScreen> {
   void _openGallery(BuildContext context) {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (ctx) => const CharacterGalleryScreen(),
+        builder: (ctx) => const GalleryTabsScreen(),
       ),
     );
   }
@@ -50,21 +51,16 @@ class _HomeAffirmationScreenState extends ConsumerState<HomeAffirmationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Comfort Zone',
-          // style: TextStyle(
-          //   color: Theme.of(context).colorScheme.onPrimary,
-          // ),
         ),
-        // backgroundColor: Theme.of(context).colorScheme.primary,
         actions: [
           IconButton(
             onPressed: () {
               _openGallery(context);
             },
-            icon: Icon(
+            icon: const Icon(
               Icons.grid_view_sharp,
-              // color: Theme.of(context).colorScheme.onPrimary,
             ),
           ),
         ],

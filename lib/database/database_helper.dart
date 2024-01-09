@@ -10,11 +10,15 @@ import 'package:sqflite/sqlite_api.dart';
 class SQLiteDatabaseHelper {
   final _dbName = 'comfort_zone.db';
   final _characterTable = 'characters';
+  final _affirmationTable = 'affirmations';
 
   final _characterId = 'c_id';
   final _characterImage = 'image';
   final _characterName = 'name';
   final _characterDate = 'create_date';
+
+  final _affirmationId = 'a_id';
+  final _affirmationText = 'text';
 
   // Open database (or create one if it doesn't exist yet)
   Future<Database> _getDatabase() async {
@@ -24,14 +28,19 @@ class SQLiteDatabaseHelper {
     // Open database
     final db = await sql.openDatabase(
       path.join(dbPath, _dbName),
-      onCreate: (db, version) {
-        return db.execute("""CREATE TABLE $_characterTable(
+      onCreate: (db, version) async {
+        await db.execute("""CREATE TABLE IF NOT EXISTS $_characterTable(
             $_characterId TEXT PRIMARY KEY, 
             $_characterImage TEXT, 
             $_characterName TEXT, 
             $_characterDate TEXT
             )
             """);
+        await db.execute("""CREATE TABLE IF NOT EXISTS $_affirmationTable(
+              $_affirmationId TEXT PRIMARY KEY, 
+              $_affirmationText TEXT
+              )
+              """);
       },
       version: 1,
     );
@@ -45,8 +54,8 @@ class SQLiteDatabaseHelper {
         .getApplicationDocumentsDirectory(); // Get directory to save user data to
     final filename =
         path.basename(image.path); // Get original name of the image file
-    final copiedImage = await image
-        .copy('${appDir.path}/${id}_$filename'); // Copy image to the app directory
+    final copiedImage = await image.copy(
+        '${appDir.path}/${id}_$filename'); // Copy image to the app directory
 
     return copiedImage;
   }
@@ -149,6 +158,6 @@ class SQLiteDatabaseHelper {
     );
 
     // Delete the image from the app storage
-    if(await character.image.exists()) await character.image.delete();
+    if (await character.image.exists()) await character.image.delete();
   }
 }
