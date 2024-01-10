@@ -1,12 +1,19 @@
+import 'package:comfort_zone_remake/models/affirmation.dart';
+
 import 'package:flutter/material.dart';
 
 // Affirmation item to show in list
 class AffirmationItem extends StatelessWidget {
-  const AffirmationItem(
-      {super.key, required this.text, required this.deletable});
+  const AffirmationItem({
+    super.key,
+    required this.affirmation,
+    required this.deletable,
+    this.onDelete,
+  });
 
-  final String text;
+  final Affirmation affirmation;
   final bool deletable;
+  final void Function(Affirmation aff)? onDelete;
 
   @override
   Widget build(BuildContext context) {
@@ -26,12 +33,14 @@ class AffirmationItem extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            text,
+            affirmation.text,
             style: Theme.of(context).textTheme.bodyMedium,
           ),
           if (deletable)
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                onDelete!(affirmation);
+              },
               icon: const Icon(Icons.delete),
             ),
         ],

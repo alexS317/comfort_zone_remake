@@ -105,6 +105,7 @@ class _AddCharacterScreenState extends ConsumerState<AddCharacterScreen> {
               decoration: const InputDecoration(
                 labelText: 'Character name',
               ),
+              maxLength: 50,
             ),
             const SizedBox(height: 26),
             // Save button

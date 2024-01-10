@@ -27,6 +27,7 @@ class CharactersNotifier extends StateNotifier<List<Character>> {
   void updateCharacter(Character character, File image, String name) async {
     // Spread elements of the old state (assign them individually)
     final charactersList = [...state];
+    
     // Search the current character based on id
     final currentCharacter =
         charactersList.where((element) => element.id == character.id).toList();

@@ -1,14 +1,17 @@
+import 'package:comfort_zone_remake/providers/affirmations_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // Add a new affirmation
-class AddAffirmationScreen extends StatefulWidget {
+class AddAffirmationScreen extends ConsumerStatefulWidget {
   const AddAffirmationScreen({super.key});
 
   @override
-  State<AddAffirmationScreen> createState() => _AddAffirmationScreenState();
+  ConsumerState<AddAffirmationScreen> createState() =>
+      _AddAffirmationScreenState();
 }
 
-class _AddAffirmationScreenState extends State<AddAffirmationScreen> {
+class _AddAffirmationScreenState extends ConsumerState<AddAffirmationScreen> {
   final _textController = TextEditingController();
 
   @override
@@ -32,6 +35,7 @@ class _AddAffirmationScreenState extends State<AddAffirmationScreen> {
       return;
     }
 
+    ref.read(affirmationsProvider.notifier).addAffirmation(enteredText);
     Navigator.of(context).pop();
   }
 
@@ -50,6 +54,7 @@ class _AddAffirmationScreenState extends State<AddAffirmationScreen> {
               decoration: const InputDecoration(labelText: 'Affirmation text'),
               keyboardType: TextInputType.multiline,
               maxLines: null,
+              maxLength: 50,
             ),
             const SizedBox(
               height: 26,

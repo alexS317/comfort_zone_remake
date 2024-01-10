@@ -30,6 +30,7 @@ class CharacterGalleryGrid extends StatelessWidget {
         character: characters[index],
       ),
       shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
     );
   }
 }

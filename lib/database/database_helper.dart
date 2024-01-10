@@ -1,10 +1,15 @@
 import 'dart:io';
 
+import 'package:comfort_zone_remake/models/affirmation.dart';
 import 'package:comfort_zone_remake/models/character.dart';
+
 import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart' as syspaths;
 import 'package:sqflite/sqflite.dart' as sql;
 import 'package:sqflite/sqlite_api.dart';
+import 'package:uuid/uuid.dart';
+
+const uuid = Uuid();
 
 // Database helper class provides sqlite methods
 class SQLiteDatabaseHelper {
@@ -81,25 +86,10 @@ class SQLiteDatabaseHelper {
     return allCharacters;
   }
 
-  Future<Character> loadOneCharacter(String id) async {
-    final db = await _getDatabase();
-    final data = await db
-        .query(_characterTable, where: "$_characterId = ?", whereArgs: [id]);
-    final currentMap = data[0];
-
-    final currentCharacter = Character(
-      id: currentMap[_characterId] as String,
-      image: File(currentMap[_characterImage] as String),
-      name: currentMap[_characterName] as String,
-      createDate: currentMap[_characterDate] as String,
-    );
-
-    return currentCharacter;
-  }
-
   // Add a new character to database and return it
   Future<Character> addCharacter(File image, String name) async {
-    final id = uuid.v4();
+    final id =
+        uuid.v4(); // Need to create id manually to use it as name for the image
     final copiedImage = await _copyImage(id, image);
 
     final newCharacter = Character(image: copiedImage, name: name, id: id);
@@ -159,5 +149,49 @@ class SQLiteDatabaseHelper {
 
     // Delete the image from the app storage
     if (await character.image.exists()) await character.image.delete();
+  }
+
+  // Load affirmations from the database and convert them to a list
+  Future<List<Affirmation>> loadAllAffirmations() async {
+    final db = await _getDatabase();
+    final data = await db.query(_affirmationTable);
+
+    final allAffirmations = data
+        .map(
+          (rowItem) => Affirmation(
+            id: rowItem[_affirmationId] as String,
+            text: rowItem[_affirmationText] as String,
+          ),
+        )
+        .toList();
+
+    return allAffirmations;
+  }
+
+  // Add new affirmation
+  Future<Affirmation> addAffirmation(String text) async {
+    final newAffirmation = Affirmation(text: text);
+
+    final db = await _getDatabase();
+    db.insert(
+      _affirmationTable,
+      {
+        _affirmationId: newAffirmation.id,
+        _affirmationText: newAffirmation.text,
+      },
+    );
+
+    return newAffirmation;
+  }
+
+  // Delete an affirmation
+  Future<void> deleteAffirmation(Affirmation affirmation) async {
+    final db = await _getDatabase();
+
+    db.delete(
+      _affirmationTable,
+      where: "$_affirmationId = ?",
+      whereArgs: [affirmation.id],
+    );
   }
 }

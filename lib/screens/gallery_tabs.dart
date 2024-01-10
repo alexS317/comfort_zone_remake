@@ -1,6 +1,6 @@
 import 'package:comfort_zone_remake/screens/add_affirmation.dart';
 import 'package:comfort_zone_remake/screens/add_character.dart';
-import 'package:comfort_zone_remake/screens/affirmation_list.dart';
+import 'package:comfort_zone_remake/screens/affirmation_gallery.dart';
 import 'package:comfort_zone_remake/screens/character_gallery.dart';
 
 import 'package:flutter/material.dart';
