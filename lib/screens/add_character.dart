@@ -83,7 +83,9 @@ class _AddCharacterScreenState extends ConsumerState<AddCharacterScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add new character'),
+        title: (widget.oldCharacter == null)
+            ? const Text('Add new character')
+            : const Text('Edit character'),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),

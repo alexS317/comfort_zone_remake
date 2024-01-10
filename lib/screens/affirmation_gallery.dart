@@ -1,4 +1,5 @@
 import 'package:comfort_zone_remake/data/default_affirmations.dart';
+import 'package:comfort_zone_remake/database/user_settings.dart';
 import 'package:comfort_zone_remake/models/affirmation.dart';
 import 'package:comfort_zone_remake/providers/affirmations_provider.dart';
 import 'package:comfort_zone_remake/widgets/affirmation_list.dart';
@@ -33,6 +34,25 @@ class _AffirmationGalleryScreenState
   @override
   Widget build(BuildContext context) {
     final affirmations = ref.watch(affirmationsProvider);
+    bool defaultsAllowed;
+
+    // Toggle whether default affirmations should be included and set user preferences accordingly
+    Widget defaultToggler = FutureBuilder(
+      future: UserSettings().getIncludeDefaultAffirmations(),
+      builder: (context, snapshot) {
+        defaultsAllowed = snapshot.data ?? false;
+
+        return Switch(
+            value: defaultsAllowed,
+            onChanged: (value) {
+              UserSettings().setIncludeDefaultAffirmations(value);
+              setState(() {
+                defaultsAllowed = value;
+              });
+            });
+        // }
+      },
+    );
 
     return SingleChildScrollView(
       padding: const EdgeInsets.all(8.0),
@@ -56,11 +76,26 @@ class _AffirmationGalleryScreenState
             },
           ),
           const SizedBox(
-            height: 16,
+            height: 20,
+          ),
+          Row(
+            children: [
+              Text(
+                "Default",
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              defaultToggler,
+            ],
           ),
           Text(
-            "Default",
-            style: Theme.of(context).textTheme.titleMedium,
+            "Default affirmations will be used regardless if you don't have any custom affirmations saved.",
+            style: Theme.of(context).textTheme.bodySmall,
+          ),
+          const SizedBox(
+            height: 10,
           ),
           AffirmationList(
             list: defaultAffirmations,
