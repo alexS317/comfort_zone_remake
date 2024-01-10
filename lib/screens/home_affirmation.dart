@@ -1,3 +1,4 @@
+import 'package:comfort_zone_remake/providers/affirmations_provider.dart';
 import 'package:comfort_zone_remake/providers/characters_provider.dart';
 import 'package:comfort_zone_remake/screens/add_character.dart';
 import 'package:comfort_zone_remake/screens/gallery_tabs.dart';
@@ -17,6 +18,8 @@ class HomeAffirmationScreen extends ConsumerStatefulWidget {
 
 class _HomeAffirmationScreenState extends ConsumerState<HomeAffirmationScreen> {
   late Future<void> _charactersFuture;
+  // ignore: unused_field
+  late Future<void> _affirmationsFuture;
 
   void _openGallery(BuildContext context) {
     Navigator.of(context).push(
@@ -39,6 +42,8 @@ class _HomeAffirmationScreenState extends ConsumerState<HomeAffirmationScreen> {
 
   void _loadRandomCharacter() {
     _charactersFuture = ref.read(charactersProvider.notifier).loadCharacters();
+    _affirmationsFuture = ref.read(affirmationsProvider.notifier).loadAffirmations();
+
   }
 
   @override
@@ -74,6 +79,8 @@ class _HomeAffirmationScreenState extends ConsumerState<HomeAffirmationScreen> {
                 return const Center(child: CircularProgressIndicator());
               } else {
                 final characters = ref.watch(charactersProvider);
+                final affirmations = ref.watch(affirmationsProvider);
+
                 if (characters.isEmpty) {
                   _addCharacterEntry(context);
                   return const Center(
@@ -81,6 +88,7 @@ class _HomeAffirmationScreenState extends ConsumerState<HomeAffirmationScreen> {
                 } else {
                   return RandomCharacter(
                       characters: characters,
+                      affirmations: affirmations,
                       onLoadCharacter: _loadRandomCharacter);
                 }
               }
