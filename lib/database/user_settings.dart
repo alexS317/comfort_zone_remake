@@ -13,7 +13,7 @@ class UserSettings {
   Future<bool> getIncludeDefaultAffirmations() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    // Return false if the function result is null
-    return prefs.getBool(_defaultAffirmationsPrefs) ?? false;
+    // Return true if the function result is null (user hasn't set preferences yet)
+    return prefs.getBool(_defaultAffirmationsPrefs) ?? true;
   }
 }
