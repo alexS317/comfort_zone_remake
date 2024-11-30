@@ -33,13 +33,13 @@ class MyApp extends StatelessWidget {
       ),
       elevatedButtonTheme: const ElevatedButtonThemeData(
         style: ButtonStyle(
-          padding: MaterialStatePropertyAll(
+          padding: WidgetStatePropertyAll(
             EdgeInsets.symmetric(
               vertical: 14.0,
               horizontal: 20.0,
             ),
           ),
-          textStyle: MaterialStatePropertyAll(
+          textStyle: WidgetStatePropertyAll(
             TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w600,
@@ -67,13 +67,13 @@ class MyApp extends StatelessWidget {
       ),
       elevatedButtonTheme: const ElevatedButtonThemeData(
         style: ButtonStyle(
-          padding: MaterialStatePropertyAll(
+          padding: WidgetStatePropertyAll(
             EdgeInsets.symmetric(
               vertical: 14.0,
               horizontal: 20.0,
             ),
           ),
-          textStyle: MaterialStatePropertyAll(
+          textStyle: WidgetStatePropertyAll(
             TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w600,

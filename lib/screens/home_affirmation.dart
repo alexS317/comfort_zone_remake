@@ -32,7 +32,7 @@ class _HomeAffirmationScreenState extends ConsumerState<HomeAffirmationScreen> {
   // Open add screen to add a new entry if there are no entries yet
   Future<void> _addCharacterEntry(BuildContext context) async {
     await Future.delayed(Duration.zero);
-    if (!mounted) return;
+    if (!context.mounted) return;
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (ctx) => const AddCharacterScreen(),
