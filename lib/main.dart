@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const Color seedColor = Color.fromARGB(255, 87, 62, 194);
+    const Color seedColor = Color.fromARGB(255, 64, 35, 193);
 
     final lightColors = ColorScheme.fromSeed(
       brightness: Brightness.light,

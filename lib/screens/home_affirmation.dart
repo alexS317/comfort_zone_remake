@@ -42,8 +42,8 @@ class _HomeAffirmationScreenState extends ConsumerState<HomeAffirmationScreen> {
 
   void _loadRandomCharacter() {
     _charactersFuture = ref.read(charactersProvider.notifier).loadCharacters();
-    _affirmationsFuture = ref.read(affirmationsProvider.notifier).loadAffirmations();
-
+    _affirmationsFuture =
+        ref.read(affirmationsProvider.notifier).loadAffirmations();
   }
 
   @override
@@ -54,45 +54,67 @@ class _HomeAffirmationScreenState extends ConsumerState<HomeAffirmationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Comfort Zone',
-        ),
-        actions: [
-          IconButton(
-            onPressed: () {
-              _openGallery(context);
-            },
-            icon: const Icon(
-              Icons.grid_view_sharp,
-            ),
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text(
+            'Comfort Zone',
           ),
-        ],
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
-        child: FutureBuilder(
-            future: _charactersFuture,
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(child: CircularProgressIndicator());
-              } else {
-                final characters = ref.watch(charactersProvider);
-                final affirmations = ref.watch(affirmationsProvider);
+          actions: [
+            IconButton(
+              onPressed: () {
+                _openGallery(context);
+              },
+              icon: const Icon(
+                Icons.grid_view_sharp,
+              ),
+            ),
+          ],
+        ),
+        body: Stack(
+          alignment: AlignmentDirectional.topCenter,
+          fit: StackFit.expand,
+          children: [
+            SingleChildScrollView(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                children: [
+                  FutureBuilder(
+                      future: _charactersFuture,
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(
+                              child: CircularProgressIndicator());
+                        } else {
+                          final characters = ref.watch(charactersProvider);
+                          final affirmations = ref.watch(affirmationsProvider);
 
-                if (characters.isEmpty) {
-                  _addCharacterEntry(context);
-                  return const Center(
-                      child: Text("No characters available yet."));
-                } else {
-                  return RandomCharacter(
-                      characters: characters,
-                      affirmations: affirmations,
-                      onLoadCharacter: _loadRandomCharacter);
-                }
-              }
-            }),
+                          if (characters.isEmpty) {
+                            _addCharacterEntry(context);
+                            return const Center(
+                                child: Text("No characters available yet."));
+                          } else {
+                            return RandomCharacter(
+                                characters: characters,
+                                affirmations: affirmations);
+                          }
+                        }
+                      }),
+                  const SizedBox(height: 110)
+                ],
+              ),
+            ),
+            Positioned(
+              bottom: 60,
+              child: ElevatedButton.icon(
+                onPressed: _loadRandomCharacter,
+                icon: const Icon(Icons.favorite),
+                label: const Text('Get Affirmation'),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

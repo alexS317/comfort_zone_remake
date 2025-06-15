@@ -47,33 +47,35 @@ class _GalleryTabsScreenState extends State<GalleryTabsScreen> {
       activeTabTitle = 'Affirmations';
     }
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(activeTabTitle),
-      ),
-      body: activeTab,
-      bottomNavigationBar: BottomNavigationBar(
-        onTap: _selectTab,
-        currentIndex: _selectedTabIndex,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.filter_none),
-            label: 'Characters',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.text_format),
-            label: 'Affirmations',
-          ),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          _openAddScreen(context);
-        },
-        shape: const CircleBorder(
-          side: BorderSide.none,
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(activeTabTitle),
         ),
-        child: const Icon(Icons.add),
+        body: activeTab,
+        bottomNavigationBar: BottomNavigationBar(
+          onTap: _selectTab,
+          currentIndex: _selectedTabIndex,
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.filter_none),
+              label: 'Characters',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.text_format),
+              label: 'Affirmations',
+            ),
+          ],
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            _openAddScreen(context);
+          },
+          shape: const CircleBorder(
+            side: BorderSide.none,
+          ),
+          child: const Icon(Icons.add),
+        ),
       ),
     );
   }

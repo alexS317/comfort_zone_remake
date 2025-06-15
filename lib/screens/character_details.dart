@@ -50,58 +50,61 @@ class _CharacterDetailsScreenState
       currentCharacter = updatedCharacter!;
     }
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(currentCharacter!.name),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: Image.file(
-                currentCharacter!.image,
-                fit: BoxFit.cover,
-                width: double.infinity,
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(currentCharacter!.name),
+        ),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: Image.file(
+                  currentCharacter!.image,
+                  fit: BoxFit.cover,
+                  width: double.infinity,
+                ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 6.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    currentCharacter!.name,
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                  Row(
-                    children: [
-                      // Edit
-                      IconButton(
-                        onPressed: () {
-                          _openEditScreen(context);
-                        },
-                        icon: const Icon(
-                          Icons.edit,
-                          size: 30,
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 6.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      currentCharacter!.name,
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                    Row(
+                      children: [
+                        // Edit
+                        IconButton(
+                          onPressed: () {
+                            _openEditScreen(context);
+                          },
+                          icon: const Icon(
+                            Icons.edit,
+                            size: 30,
+                          ),
                         ),
-                      ),
-                      // Delete
-                      IconButton(
-                        onPressed: () {
-                          _deleteEntry();
-                        },
-                        icon: const Icon(
-                          Icons.delete,
-                          size: 30,
+                        // Delete
+                        IconButton(
+                          onPressed: () {
+                            _deleteEntry();
+                          },
+                          icon: const Icon(
+                            Icons.delete,
+                            size: 30,
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+              const SizedBox(height: 10),
+            ],
+          ),
         ),
       ),
     );

@@ -41,32 +41,34 @@ class _AddAffirmationScreenState extends ConsumerState<AddAffirmationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Add new affirmation'),
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            TextField(
-              controller: _textController,
-              decoration: const InputDecoration(labelText: 'Affirmation text'),
-              keyboardType: TextInputType.multiline,
-              maxLines: null,
-              maxLength: 50,
-            ),
-            const SizedBox(
-              height: 26,
-            ),
-            ElevatedButton.icon(
-              onPressed: () {
-                _saveAffirmation(context);
-              },
-              icon: const Icon(Icons.save),
-              label: const Text('Save'),
-            ),
-          ],
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Add new affirmation'),
+        ),
+        body: SingleChildScrollView(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              TextField(
+                controller: _textController,
+                decoration: const InputDecoration(labelText: 'Affirmation text'),
+                keyboardType: TextInputType.multiline,
+                maxLines: null,
+                maxLength: 50,
+              ),
+              const SizedBox(
+                height: 26,
+              ),
+              ElevatedButton.icon(
+                onPressed: () {
+                  _saveAffirmation(context);
+                },
+                icon: const Icon(Icons.save),
+                label: const Text('Save'),
+              ),
+            ],
+          ),
         ),
       ),
     );

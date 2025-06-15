@@ -81,44 +81,47 @@ class _AddCharacterScreenState extends ConsumerState<AddCharacterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: (widget.oldCharacter == null)
-            ? const Text('Add new character')
-            : const Text('Edit character'),
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          children: [
-            // Image input
-            widget.oldCharacter != null
-                ? ImageInput.edit(
-                    onPickImage: (image) => _selectedImage = image,
-                    oldImage: widget.oldCharacter!.image,
-                  )
-                : ImageInput(
-                    onPickImage: (image) => _selectedImage = image,
-                  ),
-            const SizedBox(height: 10),
-            // Name input
-            TextField(
-              controller: _nameController,
-              decoration: const InputDecoration(
-                labelText: 'Character name',
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: (widget.oldCharacter == null)
+              ? const Text('Add new character')
+              : const Text('Edit character'),
+        ),
+        body: SingleChildScrollView(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            children: [
+              // Image input
+              widget.oldCharacter != null
+                  ? ImageInput.edit(
+                      onPickImage: (image) => _selectedImage = image,
+                      oldImage: widget.oldCharacter!.image,
+                    )
+                  : ImageInput(
+                      onPickImage: (image) => _selectedImage = image,
+                    ),
+              const SizedBox(height: 10),
+              // Name input
+              TextField(
+                controller: _nameController,
+                decoration: const InputDecoration(
+                  labelText: 'Character name',
+                ),
+                maxLength: 50,
               ),
-              maxLength: 50,
-            ),
-            const SizedBox(height: 26),
-            // Save button
-            ElevatedButton.icon(
-              onPressed: () {
-                _saveCharacter(context);
-              },
-              icon: const Icon(Icons.save),
-              label: const Text('Save'),
-            ),
-          ],
+              const SizedBox(height: 26),
+              // Save button
+              ElevatedButton.icon(
+                onPressed: () {
+                  _saveCharacter(context);
+                },
+                icon: const Icon(Icons.save),
+                label: const Text('Save'),
+              ),
+              const SizedBox(height: 10),
+            ],
+          ),
         ),
       ),
     );
